@@ -1,0 +1,14 @@
+{% extends 'blog/base_blog.html' %} <!--12_ Делаем росширение общего шаблона-->
+
+{% block title %} <!--11_ Размечаем блоки -->
+  Posts List <!-- по умолчанию-->
+{% endblock %}
+
+{% block content %} <!--11_ Размечаем блоки -->
+  <h1 class='mb-5'>Posts:</h1>
+  {% for name in names %} <!--7_ так передаем шаблону данные из view.py из словаря context метода posts_list-->
+    <p>
+      {{ name }}
+    </p>
+    {% endfor %}
+{% endblock %}
