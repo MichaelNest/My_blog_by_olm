@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('blog/', include('blog.urls')) #2_ С помощью метода include переадресуем на файл blog/urls.py 
+    path('blog/', include('blog.urls')) #2_ С помощью метода include переадресуем c main_blog/urls.py на файл blog/urls.py
 ]

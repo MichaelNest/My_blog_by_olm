@@ -1,0 +1,15 @@
+{% extends 'blog/base_blog.html' %}
+<!--31_Создаем шаблон для перехода на просмотр поста по кнопке Read-->
+{% block title %}
+  {{ post.title }} - {{ block.super }} <!-- До надписи post.title через дефис добавится тексе из block.super-->
+{% endblock %}
+
+{% block content %}
+  <h1 class="mt-5">
+      {{ post.title }}
+  </h1>
+  <p>
+      {{ post.body }}
+  </p>
+
+{% endblock %}
