@@ -1,0 +1,22 @@
+<!-- 47_Создаем папку blog/includes в которой создаем файл-шаблон post_card_include.html-->
+
+<div class="card mb-4"> <!-- 26_Берем из Bootstrap/Card/Header and footer код и вставляем в него post.data_pub, post.title и post.body-->
+  <div class="card-header">
+    {{ post.data_pub }}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ post.title}}</h5>
+    <p class="card-text">{{post.body|truncatewords:22}}</p>
+    <!-- 27_post.body|truncatewords:22 - это фильтр для шаблонов из документации django - означает что мы ограничиваем тексе 22-мя словами-->
+    <!-- 32_Подставляем в кнопку ссылку для перехода url 'post_detail_url' slug=post.slug-->
+    <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Read</a>
+    <!-- 34_ Для получения ссылки вызываем метод post.get_absolute_url , который мы написали в blog/models.py-->
+  </div>
+  <div class="card-footer text-muted">
+    Tags:
+    {% for tag in post.tags.all %}
+      <a href='{{tag.get_absolute_url}}'>{{tag.title}}</a>
+    {% endfor %}
+  </div>
+  <!-- 51_Вставляем элемене для card-footer-перечисление тэгов к данному посту-->
+</div>

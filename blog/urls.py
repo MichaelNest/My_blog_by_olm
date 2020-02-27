@@ -6,5 +6,8 @@ urlpatterns = [
 # 28_Создаем имя для данного path(), чтоб по этому имени можно было б ссылаться в шаблонах html
     path('post/<str:slug>/', post_detail, name='post_detail_url'),
 # 29_ Создаем новый урл-шаблон. <str:slug> - это именнованная группа символов - в данном случае это slug типа string
-
+    path('tags/', tags_list, name='tags_list_url'),
+# 38_Создаем новый урл-шаблое для тэгов
+    path('tag/<str:slug>', tag_detail, name='tag_detail_url')
+# 42_Создаем урл-шаблон для перехода на страничку тегов
 ]

@@ -13,14 +13,28 @@ class Post(models.Model): #16_ Создаем класс модели Post
     data_pub = models.DateTimeField(auto_now_add=True) # 20_ Создаем параметр даты публикации
     # auto_now_add=True - будет сохранять дату публикации при каждом сохранении в базу данных
     # auto_now=True - будет сохранять дату публикации при каждом изменении поста
+    tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
+    # 36_Создаем параметр, связывающий два класса Post и Tag. blank=True - дозволяет посту не иметь тега.
+    # Если параметр tags в посте указывает на все привязанные к этому посту тэги,
+    # То параметром related_name='posts' мы задаем свойство posts - которое появится у экземпляров tag
 
     def get_absolute_url(self): # 33_Будет возвращать ссылку на конкретный обьекм класса Post
         return reverse('post_detail_url', kwargs={'slug': self.slug})
 
-
     def __str__(self):
         return f'{self.title}' # этот метод отвечает за вывод информации об обьекте. Будем выдавать содержимое поля title
 
+class Tag(models.Model): # 35_Создаем модель Tag для тэгов
+    title = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50, unique=True)
+
+    def get_absolute_url(self):
+        return reverse('tag_detail_url', kwargs={'slug': self.slug})
+    # 49_Создаем в моделях метод для ссылки на конкретный обьект класса Tag
+
+
+    def __str__(self):
+        return f'{self.title}'
     # 21_ Создаем миграции - переносим нашу модель Post в базу данных (находясь в виртуальном окружении):
     # python manage.py makemigrations
     # python manage.py migrate
@@ -40,3 +54,17 @@ class Post(models.Model): #16_ Создаем класс модели Post
     # >>> .get - возвращаем один обьект. .filter - может возвращать несколько обьектов
     # >>> post = Post.objects.filter(slug__contains='new') - выдаст все обьекты с 'new' в значении slug
     # >>> __contains - это lookup - значит выдать все обьекты, где в значении slug есть слово 'new'
+
+    # 37 Заходим в консоль Django чтоб через нее создавать обьекты модели Tag в базе данных - создавать посты и управлять ими
+    # python managt.py shell -  команда захода в консоль
+
+    # >>> from blog.models import *
+    # >>> django_t = Tag.objects.create(title='django', slug='django') - создаем обьект тэга
+    # >>> Post.objects.values() - отобразит все наши обьекты-посты и их свойства и методы
+    # >>> post = Post.objects.get(slug='new_slug_1')
+    # >>> post.slug = 'new_post_1'
+    # >>> post.save()
+    # >>> post.tags.add(django_t) - добавили обьекту post обьект django_t через менеджер tag - т е мы связали пост и тег
+    # >>> post.tags.all() - посмотеть все тэги прикрепленные к посту post.
+    # >>> django_t.posts.all() - покажет все посты, прикрепленные к этому обьекту тэга.
+    # >>>

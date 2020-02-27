@@ -3,8 +3,9 @@
 <html lang="en" dir="ltr"> <!--8_ создаем  общий файл-шаблон blog/templates/blog/base_blog.html-->
   <head>
     <meta charset="utf-8">
-    <!--9_ Идем на сайт Bootstrap и забираем оттуда код шаблона из раздела Getting Started/CSS-->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!--9_ Идем на сайт Bootstrap и забираем оттуда код шаблона из раздела Getting Started/CSS-->
     <!--11_ Размечаем блоки -->
     <title>
 
@@ -24,11 +25,12 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'posts_list_url' %}">Articles</a>
+            <a class="nav-link" href="{% url 'posts_list_url' %}">Posts</a>
             <!-- 30_в параметр href записываем ссылку через имя параметра path() файла blog/urls.py-->
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="{% url 'tags_list_url' %}">Tags</a>
+            <!-- 41_Создаем на кнопке Tags ссылку на страничку с тэгами-->
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Pricing</a>

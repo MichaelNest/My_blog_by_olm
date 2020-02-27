@@ -1,0 +1,16 @@
+{% extends 'blog/base_blog.html' %} <!-- 44_Создаем шаблон tag_detail.html который расширяет шаблон base_blog.html-->
+
+{% block title %}
+  {{ tag.title}} - {{block.super}}
+{% endblock %}
+<!-- 45_Создаем заголовок странички - tag.title|title - |title - это фильтр, чтоб сделали заглавную букву большой-->
+{% block content %}
+  <h1 class='mb-5'> Post with '{{tag.title|title}}' tag: </h1>
+
+    {% for post in tag.posts.all  %}
+      {% include 'blog/includes/post_card_include.html' %}
+    {% endfor  %}
+
+{% endblock %}
+<!-- 46_Создаем страничку для всех тегов к данному посту, копируем шоблон из blog/index.html -->
+<!-- 48_Включаем шаблон из {% include 'blog/includes/post_card_include.html' %}-->
