@@ -1,0 +1,28 @@
+{% extends 'blog/base_blog.html' %} <!-- 70_Создаем файл-шаблон tag_create.html, наследуем его от базового шаблона-->
+
+{% block title %}
+  Block Create - {{block.super}}
+{% endblock}
+
+{% block content %}
+  <form action='{% url "tag_create_url" %}' method='post'>
+    {% csrf token %}
+<!-- 71_Заполняем шаблон - делаем кнопку, применяем класс из Bootstrap для дизайна формы (div class='form-group')-->
+      {% for field in form %}
+        <div class='form-group'>
+          {% if field.errors %}
+            <div class='alert.alert-denger'> <!-- 72_Вывод ошибок, если они есть-->
+              {{field.errors}}
+            </div>
+          {% endif %}
+
+          {{ field.label}}
+          {{ field }}
+        </div>
+
+      {% endfor %}
+
+  <button type='submit' class='btn btn-primary'>Create Teg</button>
+
+
+{% endblock %}

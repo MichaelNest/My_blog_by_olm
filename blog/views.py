@@ -3,6 +3,8 @@ from .models import Post, Tag
 from django.views.generic import View
 from django.shortcuts import get_object_or_404
 from .utils import ObjectDetailMixin
+from .forms import TagForm
+from django.shortcuts import redirect
 
 # Create your views here.
 def posts_list(request):
@@ -43,5 +45,17 @@ class TagDetail(ObjectDetailMixin, View): # 54_Создаем класс TagDeta
 #     tag = Tag.objects.get(slug__iexact=slug)
 #     return render(request, 'blog/tag_detail.html', context={'tag': tag })
 
+class TagCreate(View):
+    def get(self, request):# 69_Создаем метод get класса TagCreate
+        form = TagForm()
+        return render(request, 'blog/tag_create.html', context={'form': formW})
+
+    def post(self, request): # 74_Создаем метод post в классе TagCreate, проверяем валидность введенной информации
+        bound_form = TagForm(request.POST)
+
+        if bound_form.is_valid():
+            new_tag= bound_form.save()
+            return redirect(new_tag)
+        return render(request, 'blog/tags_list.html', context={'form': bound_form})
 # >>> Post.mro() - метод mro() покажет порядок следования классов родителей.
 # >>> class TagDetail(ObjectDetailMixin, View): - значит что ближайший родитель этого класса будет ObjectDetailMixin, а следующим - View

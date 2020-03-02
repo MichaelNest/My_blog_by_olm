@@ -11,6 +11,7 @@ urlpatterns = [
     path('tags/', tags_list, name='tags_list_url'),
 # 38_Создаем новый урл-шаблое для тэгов
     # path('tag/<str:slug>', tag_detail, name='tag_detail_url')
+    path('tag/create', TagCreate.as_view(), name='tag_create_url') # 68_Создаем урл-шаблон для формы создания тегов
 # 42_Создаем урл-шаблон для перехода на страничку тегов
     path('tag/<str:slug>', TagDetail.as_view(), name='tag_detail_url')
 # 55_Меняем в урл-методе поле с методом из views.py - вместо post_detail указываем PostDetail.as_view()
