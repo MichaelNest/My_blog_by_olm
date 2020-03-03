@@ -1,6 +1,6 @@
 # 63_Создаем новый файл - forms.py
 from django import forms
-from .models import Tag
+from .models import Tag, Post
 from django.core.exeptions import ValidationError
 
 class TagForm(forms.ModelForm): #64_Создаем класс модели для форм
@@ -29,3 +29,18 @@ class TagForm(forms.ModelForm): #64_Создаем класс модели дл�
     #     new_tag = Tag.objects.create(title = self.cleaned_data['title'], slug = self.cleaned_data['slug'])
     #     return new_tag
     # 77_Убираем метод save(self), потому что метод ModelForm имеет встроеный метод save
+class PostForm(forms.ModelForm): #78_Создаем класс PostForms, в нем класс Meta, а в нем необходимые поля
+    class Meta:
+        model = Post
+        fields = ['title', 'slug', 'body', 'tags']
+
+        widgets = {'title': forms.TextInput(attrs={'class':'form-control'}), # Задаем стили Bootstrap
+                   'slug': forms.TextInput(attrs={'class':'form-control'}),
+                   'body': forms.Textarea(attrs={'class':'form-control'}),
+                   'tags': forms.SelectMultiple(attrs={'class':'form-control'})}
+
+        def clean_slug(self): # 79_Создаем метод для приведения поля slug к нижнему регистру
+            new_slug = self.cleaned_data['slug'].lower()
+            if new_slug == 'create':
+                raise ValidationError('Slug may not be "Create".')
+            return new_slug

@@ -1,11 +1,18 @@
 from django.db import models
 from django.shortcuts import reverse
+from django.utils.text import slugify
+from time import time
 
+def gen_slug(s): # 83_Создаем метод для автоматической генерации slug - def gen_slug(s)
+    new_slug = slugify(s, allow_unicode=True) # 84_Используем метод slugify - он автоматически из имени title делает slug
+    return new_slug +'-'+str(int(time()))
+# >>> allow_unicode = True - нужно включить, чтоб метод slugify понимал киррилицу
+# >>> time() - генерирует количество секунд с 1970 года да настоящего момента. Используем это как уникальный идентификатор
 # Create your models here.
 class Post(models.Model): #16_ Создаем класс модели Post
     title = models.CharField(max_length = 150, db_index = True) # 17_Создаем поля для нашей модели Posts
     # max_length - это количества знаков этого поля, db_index=True - включенная автоматическая индексация поля
-    slug = models.SlugField(max_length=150, unique=True) #18_Создаем параметр - удобночитаемый урл,
+    slug = models.SlugField(max_length=150, blank=True, unique=True) #18_Создаем параметр - удобночитаемый урл,
     # unique - параметр уникальности - автоматически индексируются
     # .SlugField() - позволяет использовать буквы в обоих регистрах, цифры, тире и нижнее подчеркивание
     body = models.TextField(blank=True, db_index=True) # 19_Создаем параметр для тела текста
@@ -21,6 +28,13 @@ class Post(models.Model): #16_ Создаем класс модели Post
     def get_absolute_url(self): # 33_Будет возвращать ссылку на конкретный обьекм класса Post
         return reverse('post_detail_url', kwargs={'slug': self.slug})
 
+    def get_update_url(self): # 90_Создаем метод для ссылки на конкретный обьект
+        return reverse('post_update_url', kwargs={'slug':self.slug})
+
+    def save(self, *args, **kwargs): # 85_Переопределяем метод save класса Post - для того чтоб генерировать новый slug только при создании экземпляра класса Post.
+        if not self.id:
+            self.slug = gen_slug(self.title)
+            super().save(*args, **kwargs)
     def __str__(self):
         return f'{self.title}' # этот метод отвечает за вывод информации об обьекте. Будем выдавать содержимое поля title
 
@@ -32,6 +46,8 @@ class Tag(models.Model): # 35_Создаем модель Tag для тэгов
         return reverse('tag_detail_url', kwargs={'slug': self.slug})
     # 49_Создаем в моделях метод для ссылки на конкретный обьект класса Tag
 
+    def get_update_url(self): # 90_Создаем метод get_update_url(self) для ссылки на конкретный обьект
+        return reverse('tag_update_url', kwargs={'slug':self.slug})
 
     def __str__(self):
         return f'{self.title}'

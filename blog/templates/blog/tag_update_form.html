@@ -1,0 +1,26 @@
+<!-- 88_Создаем шаблон tag_update_form.html для формы изменения тэгов-->
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+  Edit tag "{{tag.title|title}}" - {{block.super}}
+{% endblock}
+
+{% block content %}
+  <!--<form action='{% url "tag_update_url" slug=tag.slug %}' method='post'>-->
+  <form action='{{tag.get_update_url}}' method='post'>
+    {% csrf token %}
+
+      {% for field in form %}
+        <div class='form-group'>
+          {% if field.errors %}
+            <div class='alert.alert-denger'>
+            </div>
+          {% endif %}
+
+          {{ field.label}}
+          {{ field }}
+        </div>
+
+      {% endfor %}
+
+  <button type='submit' class='btn btn-primary'>Update Teg</button>
