@@ -31,6 +31,9 @@ class Post(models.Model): #16_ Создаем класс модели Post
     def get_update_url(self): # 90_Создаем метод для ссылки на конкретный обьект
         return reverse('post_update_url', kwargs={'slug':self.slug})
 
+    def get_delete_url(self): #98_ Создаем метод get_delete_url(self) для ссылки на конкретный обьект
+        return reverse('post_delete_url', kwargs={'slug':self.slug})
+
     def save(self, *args, **kwargs): # 85_Переопределяем метод save класса Post - для того чтоб генерировать новый slug только при создании экземпляра класса Post.
         if not self.id:
             self.slug = gen_slug(self.title)
@@ -48,6 +51,9 @@ class Tag(models.Model): # 35_Создаем модель Tag для тэгов
 
     def get_update_url(self): # 90_Создаем метод get_update_url(self) для ссылки на конкретный обьект
         return reverse('tag_update_url', kwargs={'slug':self.slug})
+
+    def get_delete_url(self): #98_ Создаем метод get_delete_url(self) для ссылки на конкретный обьект
+        return reverse('tag_delete_url', kwargs={'slug':self.slug})
 
     def __str__(self):
         return f'{self.title}'

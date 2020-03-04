@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Post, Tag
+from django.urls import reverse
 from django.views.generic import View
 from django.shortcuts import get_object_or_404
 from .utils import *
@@ -48,6 +49,11 @@ class PostUpdate(ObjectUpdateMixin, View): # 92_Создаем class PostUpdate(
     model_form = PostForm
     template = 'blog/post_update_form.html'
 
+class PostDelete(ObjectDeleteMixin, View): # 100_Создаем class PostDelete(ObjectUpdateMixin, View) (blog/views.py)
+    model = Post
+    template = 'blog/post_delete_form.html'
+    redirect_url = 'posts_list_url'
+
 class TagDetail(ObjectDetailMixin, View): # 54_Создаем класс TagDetail, переопределяем у него метод get, вставляем в метод get содержимое из метода tag_detail
     model = Tag
     template = 'blog/tag_detail.html'
@@ -93,6 +99,17 @@ class TagUpdate(ObjectUpdateMixin, View): #87 Создаем класс для �
     #         new_tag = bound_form.save()
     #         return redirect(new_tag)
     #     return render(request, 'blog/tag_update_form', context={'form':bound_form, 'tag': tag})
-
+class TagDelete(ObjectDeleteMixin, View): # 95_Создаем класс для удаления тегов, в нем реализуем два метода - get и post
+    model = Tag
+    template = 'blog/tag_delete_form.html'
+    redirect_url = 'tags_list_url'
+    # def get(self, request, slug):
+    #     tag = Tag.objects.get(slug__iexact=slug)
+    #     return render(request, 'blog/tag_delete_form.html', context={'tag':tag})
+    #
+    # def post(self, request, slug):
+    #     tag = Tag.objects.get(slug__iexact=slug)
+    #     tag.delete()
+    #     return redirect(reverse('tags_list_url'))# 'tags_list_url' - имя из списка урлов blog/urls.py
 # >>> Post.mro() - метод mro() покажет порядок следования классов родителей.
 # >>> class TagDetail(ObjectDetailMixin, View): - значит что ближайший родитель этого класса будет ObjectDetailMixin, а следующим - View

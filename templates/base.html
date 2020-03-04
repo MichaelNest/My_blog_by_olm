@@ -1,12 +1,18 @@
+
+{% load static %} <!-- 108_Пишем команду {% load static %}, чтоб иметь возможность импортировать css-статику-->
 <!--13_ Переносим все в этот основной шаблон из base_blog.html-->
 <!DOCTYPE html>
 <html lang="en" dir="ltr"> <!--8_ создаем  общий файл-шаблон blog/templates/blog/base_blog.html-->
   <head>
     <meta charset="utf-8">
-
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!--9_ Идем на сайт Bootstrap и забираем оттуда код шаблона из раздела Getting Started/CSS-->
     <!--11_ Размечаем блоки -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- 109_Пишем link для указания на наши стили href="{% static 'css/styles.css' %}"-->
     <title>
 
       {% block title %}
@@ -50,6 +56,13 @@
               {% endblock %}
           </div>
         </div>
+    </div>
+<!-- 103_Определяем админ-панель-->
+    <div class='admin-panel align-items-center'> <!-- 109_Добавляем в класс align-items-center для назначения вертикального выравнивания админ-панели-->
+      <a href='/admin' class="btn btn-outline-info">Admin</a> <!-- class="btn btn-outline-info" - определяет - какого вида будет кнопка - из Bootstrap-->
+        {% block admin-panel %}
+
+        {% endblock %}
     </div>
 
   </body>

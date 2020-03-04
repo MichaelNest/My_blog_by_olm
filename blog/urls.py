@@ -11,6 +11,8 @@ urlpatterns = [
 # 53_Меняем в урл-методе поле с методом из views.py - вместо post_detail указываем PostDetail.as_view()
     path('post/<str:slug>/update', PostUpdate.as_view(), name='post_update_url'),
 # 93_Создаем урл-шаблон для перехода на страничку изменения поста
+    path('post/<str:slug>/delete', PostDelete.as_view(), name='post_delete_url')
+# 101_Создаем урл-шаблон для перехода на страничку удаления поста
     path('tags/', tags_list, name='tags_list_url'),
 # 38_Создаем новый урл-шаблое для тэгов
     # path('tag/<str:slug>', tag_detail, name='tag_detail_url')
@@ -20,5 +22,7 @@ urlpatterns = [
 # 55_Меняем в урл-методе поле с методом из views.py - вместо post_detail указываем PostDetail.as_view()
     path('tag/<str:slug>/update/', TagUpdate.as_view(), name='tag_update_url')
 # 89_Создаем урл-шаблон для перехода на страничку изменения тэга
+    path('tag/<str:slug>/delete', TagDelete.as_view(), name='tag_delete_url')
+# 96_Создаем урл-шаблон для перехода на страничку удаления тега
 
 ]
