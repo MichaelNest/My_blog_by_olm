@@ -41,6 +41,9 @@ class Post(models.Model): #16_ Создаем класс модели Post
     def __str__(self):
         return f'{self.title}' # этот метод отвечает за вывод информации об обьекте. Будем выдавать содержимое поля title
 
+    class Meta: # 125_Создаем класс Meta в модели Post (blog/models.py), определяем список ordering=['-data_pub']- это значит что сортировка будет по дате создания поста (data_pub), знак минус указывает что располагаться посты будут от нового к старым.
+        ordering = ['-data_pub']
+
 class Tag(models.Model): # 35_Создаем модель Tag для тэгов
     title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, unique=True)

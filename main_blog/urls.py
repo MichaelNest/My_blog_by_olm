@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import redirect_blog
 
 urlpatterns = [
+    path('', redirect_blog), # 119_Прописываем запись path для того, чтоб совершался перезод на страницу постов по ''-адресу
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')) #2_ С помощью метода include переадресуем c main_blog/urls.py на файл blog/urls.py
 ]

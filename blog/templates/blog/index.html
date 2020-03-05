@@ -6,8 +6,8 @@
 {% block content %} <!--11_ Размечаем блоки -->
   <h1 class='mb-5'>Posts:</h1>
 <!-- 25_Заменяем /{/% for name in names /%/} и /{/{ name /}/} на /{/% for post in posts /%/} и /{/{ post.title /}/}-->
-  {% for post in posts %} <!--7_ так передаем шаблону данные из view.py из словаря context метода posts_list-->
-
+  {% for post in page_object.object_list %} <!--7_ так передаем шаблону данные из view.py из словаря context метода posts_list-->
+<!-- 131_Прописываем обьекту posts (page_object) метод object_list - posts (page_object).object_list-->
     {% include 'blog/includes/post_card_include.html' %}
 
   {% endfor %}
